@@ -2,19 +2,23 @@ name: APK Builder
 
 on:
   workflow_dispatch:
+    inputs:
+      jobId:
+        required: true
+        type: string
+
+      fileName:
+        required: true
+        type: string
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Build Started
+      - name: Show Inputs
         run: |
-          echo "APK Build Started"
-          echo "Future Android Build Engine Will Run Here"
-
-      - name: Build Finished
-        run: echo "Build Complete"
+          echo "Job ID: ${{ github.event.inputs.jobId }}"
+          echo "File: ${{ github.event.inputs.fileName }}"
