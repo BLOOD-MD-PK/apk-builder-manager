@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { createJob } from "../services/queue.service.js";
 
 export const createBuild = async (req, res) => {
   try {
@@ -8,10 +9,12 @@ export const createBuild = async (req, res) => {
       createdAt: new Date().toISOString()
     };
 
+    createJob(job);
+
     return res.status(201).json({
       success: true,
       message: "Build job created successfully.",
-      job
+      data: job
     });
   } catch (error) {
     return res.status(500).json({
